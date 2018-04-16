@@ -183,6 +183,9 @@ if(build)
     if(WITH_RSSDK)
       list(APPEND EXT_DEPS rssdk)
     endif()
+    if(WITH_LIBREALSENSE)
+      list(APPEND EXT_DEPS librealsense)
+    endif()
     PCL_MAKE_PKGCONFIG("${LIB_NAME}" "${SUBSYS_NAME}" "${SUBSYS_DESC}"
       "${SUBSYS_DEPS}" "${EXT_DEPS}" "" "" "")
 

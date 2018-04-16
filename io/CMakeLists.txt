@@ -159,7 +159,18 @@ if(build)
             src/real_sense/real_sense_device_manager.cpp
         )
     endif()
-
+    
+    if(WITH_LIBREALSENSE)
+        set(LIBREALSENSE_GRABBER_INCLUDES
+            include/pcl/io/librealsense_grabber.h
+        )
+        set(LIBREALSENSE_GRABBER_SOURCES
+            src/librealsense_grabber.cpp
+            src/librealsense/librealsense_grabber_impl.cpp
+            src/librealsense/librealsense_device_manager.cpp
+        )
+    endif()
+    
     if(LIBUSB_1_FOUND)
         set(DINAST_GRABBER_INCLUDES
             include/pcl/io/dinast_grabber.h
@@ -229,6 +240,7 @@ if(build)
         ${DAVIDSDK_GRABBER_SOURCES}
         ${DSSDK_GRABBER_SOURCES}
         ${RSSDK_GRABBER_SOURCES}
+	${LIBREALSENSE_GRABBER_SOURCES}
         )
     if(PNG_FOUND)
       list(APPEND srcs
@@ -277,6 +289,7 @@ if(build)
         ${DAVIDSDK_GRABBER_INCLUDES}
         ${DSSDK_GRABBER_INCLUDES}
         ${RSSDK_GRABBER_INCLUDES}
+	${LIBREALSENSE_GRABBER_INCLUDES}
         "include/pcl/${SUBSYS_NAME}/pxc_grabber.h"  # contains only depreciation note
         )
 
@@ -361,7 +374,11 @@ if(build)
     if(WITH_RSSDK)
       target_link_libraries(${LIB_NAME} ${RSSDK_LIBRARIES})
     endif()
-
+    
+    if(WITH_LIBREALSENSE)
+      target_link_libraries(${LIB_NAME} ${LIBREALSENSE_LIBRARIES})
+    endif()
+    
     if (PCAP_FOUND)
       target_link_libraries("${LIB_NAME}" ${PCAP_LIBRARIES})
     endif(PCAP_FOUND)
